@@ -60,4 +60,3 @@ if __name__ == "__main__":
     print("Sending email...")
     send_email(summary)
     print("Done!")
-```
