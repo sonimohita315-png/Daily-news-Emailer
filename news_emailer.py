@@ -16,7 +16,7 @@ def get_news_summary():
     client = genai.Client(api_key=GEMINI_API_KEY)
     today = date.today().strftime("%B %d, %Y")
 
-    prompt = f"""Today is {today}. Please search the web and give me a daily news briefing.
+    prompt = f"""Please give me a daily news briefing covering recent events in: {NEWS_TOPICS}.
 
 Summarize the 7-8 most important news stories from today or the past 24 hours covering: {NEWS_TOPICS}.
 
@@ -26,7 +26,7 @@ For each story:
 - Note the source
 
 Format it cleanly so it reads like a morning briefing email.
-Start with: "Good morning! Here's your news briefing for {today}."
+Start with: "Good morning! Here's your daily news briefing."
 End with a one-line sign-off."""
 
     response = client.models.generate_content(
