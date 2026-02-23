@@ -1,0 +1,30 @@
+name: Daily News Email
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # Runs every day at 7:00 AM UTC
+  workflow_dispatch:        # Also lets you trigger it manually for testing
+
+jobs:
+  send-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-genai
+
+      - name: Run news emailer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUR_EMAIL:     ${{ secrets.YOUR_EMAIL }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          NEWS_TOPICS:    ${{ secrets.NEWS_TOPICS }}
+        run: python news_emailer.py
